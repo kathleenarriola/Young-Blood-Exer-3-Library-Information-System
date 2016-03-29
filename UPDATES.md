@@ -6,7 +6,7 @@ Note: Lagay niyo yung oras at yung pangalan niyo pag nag-edit kayo :) - Jonathan
 * Main class
 * User class
 * Library class
-* Book Interface (Gawin ba nating interface? or lagay nalang tayo ng identifier sa Hashmap na encylopedia, dictionary, novel, or textbook yung book?)
+* Book Interface
   * Encyclopedia class
   * Novel class
   * Dictionary class

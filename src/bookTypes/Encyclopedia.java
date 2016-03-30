@@ -2,8 +2,6 @@
  * Class Name: Encyclopedia
  * Class Description: Defines the Encyclopedia class, which extends the Book Abstract Class.
  * 
- * Updates:
- * 		Jonathan Arino. March 29 2016, 9:52pm. Created the class.
  */
 
 package bookTypes;
@@ -11,9 +9,15 @@ package bookTypes;
 import main.Book;
 
 public class Encyclopedia extends Book {
-
-	public Encyclopedia() {
-		// TODO Auto-generated constructor stub
+	private String type;
+	
+	public Encyclopedia(String id, String title, String author, int year) {
+		super(id,title,author,year);
+		this.type = "Encyclopedia";
+	}
+	
+	public String getType(){
+		return this.type;
 	}
 
 }

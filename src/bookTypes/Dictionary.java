@@ -2,8 +2,6 @@
  * Class Name: Dictionary
  * Class Description: Defines the Dictionary class, which extends the Book Abstract Class.
  * 
- * Updates:
- * 		Jonathan Arino. March 29 2016, 9:58pm. Created the class.
  */
 
 package bookTypes;
@@ -11,9 +9,15 @@ package bookTypes;
 import main.Book;
 
 public class Dictionary extends Book {
-
-	public Dictionary() {
-		// TODO Auto-generated constructor stub
+	private String type;
+	
+	public Dictionary(String id, String title, String author, int year) {
+		super(id,title,author,year);
+		this.type = "Dictionary";
+	}
+	
+	public String getType(){
+		return this.type;
 	}
 
 }

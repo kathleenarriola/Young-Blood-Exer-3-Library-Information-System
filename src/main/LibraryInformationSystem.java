@@ -4,8 +4,6 @@
  * 
  */
 
-package main;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -34,55 +32,49 @@ public class LibraryInformationSystem {
 		
 		return menuChoice;
 	}
+
+	//public static int userLogin(); make a user login function
 	
-	public static void borrowBook(User user){
+	public static void borrowBook(User user){//fix
 		String title = "";
+		Book book;
+		
 		lib.viewAllBooks();
 		System.out.print("Enter title of book to be borrowed: ");
+
 		title = input.nextLine();
-		user.borrowBooks(lib.getBook(title));
-		if (lib.hasTitle(title)){
-			user.borrowBooks(lib.removeBook(title));
+		if (lib.hasTitle(title) && (book = lib.removeBook(title)) != null){
+			user.borrowBooks(book);
 		}
 	}
 	
 	//pakiayos po thx
-	/*public static void returnBook(){
+	public static void returnBook(User user){
 		String title = "";
-		ArrayList<Book> = bb;
 		user.viewBorrowedBooks();
+		Book toBeReturned;
+
 		System.out.println("Enter title of book to be returned: ");
 		title = input.nextLine();
 
-		bb = user.getList();
-		for(int i = 0; i < bb.size(); i++){
-			if (bb.get(i).getTitle().equals(title)) {
-				books.put(title, );
-			}
+		toBeReturned = user.returnBooks(title);
+		if(toBeReturned == null){
+			System.out.println("A book with the title " + title + " has not been borrowed by the user.");
+		}else{
+			lib.addBook(toBeReturned);
 		}
-	}*/
-	
-	
-	public static void viewBorrowedBooks(User user){
-
-
-		System.out.println("===================== BORROWED BOOKS =====================");
-		for (int i = 0; i < user.borrowedBooks.size(); i++){
-			System.out.println(user.borrowedBooks.get(i).getID());
-			System.out.println(user.borrowedBooks.get(i).getTitle());
-			System.out.println(user.borrowedBooks.get(i).getAuthor());
-			System.out.println(user.borrowedBooks.get(i).getYear());
-		}
-		System.out.println("==========================================================");
+		
 	}
+	
+
 	
 	public static void main(String[] args) {
 		int menuChoice;
-		User user = new User("Bulacs");
+		User user = null;
 
 		System.out.println("Welcome to the library!");
 		do{
-			menuChoice = menu();
+			menuChoice = menu();							//make user login first please
 			if(menuChoice < 1 || menuChoice > 4){
 				System.out.println("Wrong inputs.");
 			}
@@ -99,7 +91,7 @@ public class LibraryInformationSystem {
 			//viewAllBooks();
 			break;
 		case 4:
-			viewBorrowedBooks(user);
+			user.viewBorrowedBooks();
 			break;
 		}
 		

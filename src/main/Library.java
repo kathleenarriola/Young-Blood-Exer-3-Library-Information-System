@@ -4,8 +4,6 @@
  * 
  */
 
-package main;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -52,7 +50,7 @@ public class Library {
 			
 			while((ln = br.readLine()) != null){
 				info = ln.split(",", -1);
-				noOfBooks = rand.nextInt(6) + 15;
+				noOfBooks = rand.nextInt(6) + 16;
 				list = new ArrayList<Book>(noOfBooks);
 				for(int i = 0; i < noOfBooks ;i++){
 					list.add(new Book(info[0], info[1], Integer.parseInt(info[2]), info[3], this.generateID()));
@@ -133,10 +131,8 @@ public class Library {
 		return false;
 	}
 
-	public Book getBook(String title){
-		return this.books.get(title).remove(0);
-	}
-	
+	//removed getBook() coz it has same function as removeBook
+
 	public boolean hasTitle(String title){
 		if (this.books.containsKey(title)){
 			return true;
@@ -145,12 +141,21 @@ public class Library {
 	}
 
 	public Book removeBook(String title){
-		return (books.get(title).remove(0));
+		if (this.books.containsKey(title)){					//if else statement to check if title exists and if there is still a copy
+			if(this.books.get(title).size() <= 1){
+				System.out.println("No more copies of " + title);
+			} else return (books.get(title).remove(1));
+		}
+		return null;
+	}
+
+	public void addBook(Book book){
+		this.books.get(book.getTitle()).add(book);			//added this for the returning of book
 	}
 
 	public void viewAllBooks(){
 		for(String key : books.keySet()){
-			books.get(key).get(0);
+			books.get(key).get(0);							//make this print all info about all books
 		}
 	}
 }

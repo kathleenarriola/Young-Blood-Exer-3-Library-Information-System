@@ -4,16 +4,15 @@
  * 
  */
 
-package main;
-
 import java.util.ArrayList;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
+import java.io.Serializable;
 import java.io.File;
 
-public class User {
+public class User implements Serializable{								//mad it implement serializable
 	private static final String SER_LIST_FILE = "borrowedBooks.ser";	//tentative, IDK that file path
 
 	private String username;
@@ -25,15 +24,20 @@ public class User {
 		this.username = username;
 	}
 
-	public void borrowBooks(Book title){
+	public void borrowBooks(Book book){
 		//adds the borrowed book to the user's borrowed books cart
-		borrowedBooks.add(title);
+		this.borrowedBooks.add(book);
 	}
 
-	public void returnBooks(Book title){
+	public Book returnBooks(String title){
 		//removed the book from the user's borrowed books cart
-		borrowedBooks.remove(title);
+		for(int i = 0; i < this.borrowedBooks.size(); i++){
+			if(borrowedBooks.get(i).getTitle().equals(title)) return this.borrowedBooks.remove(i);
+		}
+		return null;
 	}
+	
+	//add save and load of User class
 
 	public void saveBooks(){
 		//serializing arrayList containing borrowed books
@@ -51,7 +55,7 @@ public class User {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void load(){
+	public void loadBooks(){
 		//deserializing and adding the borrowed books in the user's cart of borrowed books
 		try{
 			File borrowedFile = new File(SER_LIST_FILE);
@@ -65,6 +69,22 @@ public class User {
 			System.exit(0);
 		}
 	}
+
+
+	
+	public void viewBorrowedBooks(){			//move this to User nalang
+
+
+		System.out.println("===================== BORROWED BOOKS =====================");
+		for (int i = 0; i < this.borrowedBooks.size(); i++){
+			System.out.println(this.borrowedBooks.get(i).getID());
+			System.out.println(this.borrowedBooks.get(i).getTitle());
+			System.out.println(this.borrowedBooks.get(i).getAuthor());
+			System.out.println(this.borrowedBooks.get(i).getYear());
+		}
+		System.out.println("==========================================================");
+	}
+
 
 	//GETTERS
 	public ArrayList getList(){

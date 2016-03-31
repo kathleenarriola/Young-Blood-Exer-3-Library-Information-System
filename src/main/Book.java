@@ -5,36 +5,38 @@
  */
 
 package main;
+import java.io.Serializable;
 
-public abstract class Book {
-	private String id;
-	private String title;
-	private String author;
+
+public class Book implements Serializable{
+
+	private String title, author, type, id;
 	private int year;
-	
-	public Book(String id, String title, String author, int year){
-		this.id = id;
+
+	public Book(String title, String author, int year, String type, String id){
 		this.title = title;
 		this.author = author;
 		this.year = year;
+		this.type = type;
+		this.id = id;
 	}
-	
+
 
 	/* GETTERS & SETTERS*/
-	public String getId() {
-		return id;
+	public String getID() {
+		return this.id;
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public String getAuthor() {
-		return author;
+		return this.author;
 	}
 
 	public int getYear() {
-		return year;
+		return this.year;
 	}
 
 	public void setYear(int year) {

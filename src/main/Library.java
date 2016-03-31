@@ -23,8 +23,8 @@ import java.io.File;
 
 public class Library {
 
-	private static final String SER_MAP_FILE = "../../bin/libraryHash.ser";	//tentative, IDK that file path
-	private static final String BOOK_INFO_FILE = "../../bin/books.csv";
+	private static final String SER_MAP_FILE = "libraryHash.ser";	//tentative, IDK that file path
+	private static final String BOOK_INFO_FILE = "books.csv";
 	HashMap<String,ArrayList<Book>> books;
 
 	public Library(){
@@ -56,10 +56,8 @@ public class Library {
 				list = new ArrayList<Book>(noOfBooks);
 				for(int i = 0; i < noOfBooks ;i++){
 					list.add(new Book(info[0], info[1], Integer.parseInt(info[2]), info[3], this.generateID()));
-					System.out.println((list.get(i)).getTitle());
 				}
 				this.books.put(info[0], list);
-				System.out.println(this.generateID());
 			}
 
 

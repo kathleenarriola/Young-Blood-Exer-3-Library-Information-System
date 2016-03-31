@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class LibraryInformationSystem {
 	
 	private static Scanner input = new Scanner(System.in);
+	private static Library lib = new Library();
 
 	public static int menu(){
 		int menuChoice = 0;
@@ -34,19 +35,48 @@ public class LibraryInformationSystem {
 	}
 	
 	public static void borrowBook(){
-		
+		String title = "";
+		user.borrowBooks(Book);
+		viewAllBooks();
+		System.out.print("Enter title of book to be borrowed: ");
+		title = input.nextLine();
+		if (books.containsKey(title)){
+			user.borrowBooks(books.get(title).remove(0));
+		}
 	}
 	
-	public static void returnBook(){
-		
-	}
+	//pakiayos po thx
+	/*public static void returnBook(){
+		String title = "";
+		ArrayList<Book> = bb;
+		user.viewBorrowedBooks();
+		System.out.println("Enter title of book to be returned: ");
+		title = input.nextLine();
+
+		bb = user.getList();
+		for(int i = 0; i < bb.size(); i++){
+			if (bb.get(i).getTitle().equals(title)) {
+				books.put(title, );
+			}
+		}
+	}*/
 	
+
 	public static void viewAllBooks(){
-		
+		for(String key : lib.keySet()){
+			books.get(title).get(0);
+		}
 	}
 	
 	public static void viewBorrowedBooks(){
-		
+		System.out.println("===================== BORROWED BOOKS =====================");
+		for (int i = 0; i < user.borrowedBooks.size(); i++){
+			System.out.println(user.borrowedBooks.get(i).getID());
+			System.out.println(user.borrowedBooks.get(i).getTitle());
+			System.out.println(user.borrowedBooks.get(i).getAuthor());
+			System.out.println(user.borrowedBooks.get(i).getYear());
+		}
+		System.out.println("==========================================================");
 	}
 	
 	public static void main(String[] args) {

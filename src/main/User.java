@@ -18,7 +18,7 @@ public class User {
 
 	private String username;
 	private String password;
-	private ArrayList<Book> borrowedBooks;
+	public ArrayList<Book> borrowedBooks;
 
 	public User(String username) {
 		// TODO Auto-generated constructor stub

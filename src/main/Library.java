@@ -132,5 +132,25 @@ public class Library {
 		}catch(Exception e){e.printStackTrace();}
 		return false;
 	}
+
+	public Book getBook(String title){
+		return this.books.get(title).remove(0);
+	}
 	
+	public boolean hasTitle(String title){
+		if (this.books.containsKey(title)){
+			return true;
+		}
+		return false;
+	}
+
+	public Book removeBook(String title){
+		return (books.get(title).remove(0));
+	}
+
+	public void viewAllBooks(){
+		for(String key : books.keySet()){
+			books.get(key).get(0);
+		}
+	}
 }

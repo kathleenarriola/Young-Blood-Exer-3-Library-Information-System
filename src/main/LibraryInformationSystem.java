@@ -14,6 +14,7 @@ public class LibraryInformationSystem {
 	private static Scanner input = new Scanner(System.in);
 	private static Library lib = new Library();
 
+
 	public static int menu(){
 		int menuChoice = 0;
 		
@@ -34,14 +35,14 @@ public class LibraryInformationSystem {
 		return menuChoice;
 	}
 	
-	public static void borrowBook(){
+	public static void borrowBook(User user){
 		String title = "";
-		user.borrowBooks(Book);
-		viewAllBooks();
+		lib.viewAllBooks();
 		System.out.print("Enter title of book to be borrowed: ");
 		title = input.nextLine();
-		if (books.containsKey(title)){
-			user.borrowBooks(books.get(title).remove(0));
+		user.borrowBooks(lib.getBook(title));
+		if (lib.hasTitle(title)){
+			user.borrowBooks(lib.removeBook(title));
 		}
 	}
 	
@@ -61,14 +62,10 @@ public class LibraryInformationSystem {
 		}
 	}*/
 	
-
-	public static void viewAllBooks(){
-		for(String key : lib.keySet()){
-			books.get(title).get(0);
-		}
-	}
 	
-	public static void viewBorrowedBooks(){
+	public static void viewBorrowedBooks(User user){
+
+
 		System.out.println("===================== BORROWED BOOKS =====================");
 		for (int i = 0; i < user.borrowedBooks.size(); i++){
 			System.out.println(user.borrowedBooks.get(i).getID());
@@ -81,7 +78,8 @@ public class LibraryInformationSystem {
 	
 	public static void main(String[] args) {
 		int menuChoice;
-		
+		User user = new User("Bulacs");
+
 		System.out.println("Welcome to the library!");
 		do{
 			menuChoice = menu();
@@ -92,16 +90,16 @@ public class LibraryInformationSystem {
 		
 		switch(menuChoice){
 		case 1:
-			borrowBook();
+			borrowBook(user);
 			break;
 		case 2:
-			returnBook();
+			//returnBook();
 			break;
 		case 3:
-			viewAllBooks();
+			//viewAllBooks();
 			break;
 		case 4:
-			viewBorrowedBooks();
+			viewBorrowedBooks(user);
 			break;
 		}
 		

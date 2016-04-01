@@ -105,7 +105,6 @@ public class Library {
 
 		do{
 			id = Integer.toHexString(rand.nextInt(1000));
-			System.out.println(isIDExist(id));
 		}while(this.isIDExist(id));
 
 		return id;

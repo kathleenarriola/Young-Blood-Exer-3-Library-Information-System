@@ -78,7 +78,7 @@ public class LibraryInformationSystem {
 		do{
 			System.out.println(" [1] - Login to an existing account");
 			System.out.println(" [2] - Create a new account");
-			System.out.println(" [0] - Exit");
+			System.out.println(" [0] - Exit\n");
 
 			try{
 				System.out.print("Enter choice: ");
@@ -93,8 +93,8 @@ public class LibraryInformationSystem {
 
 		switch(choice){
 			case 0: System.exit(0);
-			case 1: break;
-
+			case 1: return login();
+			case 2: return newUser();
 		}
 		return null;
 	}
@@ -106,7 +106,7 @@ public class LibraryInformationSystem {
 
 		do{
 			if(isValid)System.out.print("Enter username: ");
-			else System.out.print("Enter proper username: ");
+			else System.out.print("Enter existing username: ");
 
 			input.nextLine();
 			username = input.nextLine();
@@ -115,11 +115,11 @@ public class LibraryInformationSystem {
 
 		user = User.load(username);
 
+		isValid = true;
 		do{
 			if(isValid)System.out.print("Enter password: ");
 			else System.out.print("Enter valid password: ");
 
-			input.nextLine();
 			password = input.nextLine();
 			isValid = false;
 		}while(!user.isPass(password));
@@ -128,17 +128,47 @@ public class LibraryInformationSystem {
 		return user;
 	}
 
-	//public static User newUser();	//pls make dis lol. Returns a new user
+	public static User newUser(){
+		String username, password, rePass;
+		boolean isValid = true;
+		User user;
+		
+		do{
+			if(isValid)System.out.print("Enter username: ");
+			else System.out.print("Enter non-existing username: ");
 
-	
+			input.nextLine();
+			username = input.nextLine();
+			isValid = false;
+		}while(User.isExist(username));
+
+
+		do{
+			System.out.print("Enter password: ");
+			password = input.nextLine();
+			System.out.print("Confirm password: ");
+			rePass = input.nextLine();
+
+			if(password.equals(rePass)) break;
+			else{
+				System.out.println("\n\nPasswords do not match!\n\n");
+				continue;
+			}
+
+		}while(true);
+
+		return new User(username, password);
+	}
+
 	public static void main(String[] args) {
 		int menuChoice;
 		User user = null;
 		String username = "";
 		Scanner input = new Scanner(System.in);
 
-		System.out.println("Welcome to the library!");
+		System.out.println("\n\nWelcome to the library!\n");
 		//login and friends
+		/*
 		System.out.print("Enter username: ");
 		username = input.nextLine();
 		while(true){
@@ -154,6 +184,8 @@ public class LibraryInformationSystem {
 				break;
 			}
 		}
+		*/
+		user = loginMenu();
 		do{
 			menuChoice = menu();
 			System.out.println();

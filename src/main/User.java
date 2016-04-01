@@ -22,6 +22,7 @@ public class User implements Serializable{								//mad it implement serializabl
 	public User(String username) {
 		// TODO Auto-generated constructor stub
 		this.username = username;
+		this.borrowedBooks = new ArrayList<Book>();
 	}
 
 	public void borrowBooks(Book book){
@@ -76,13 +77,16 @@ public class User implements Serializable{								//mad it implement serializabl
 
 
 		System.out.println("===================== BORROWED BOOKS =====================");
+		System.out.println();
 		for (int i = 0; i < this.borrowedBooks.size(); i++){
-			System.out.println(this.borrowedBooks.get(i).getID());
-			System.out.println(this.borrowedBooks.get(i).getTitle());
-			System.out.println(this.borrowedBooks.get(i).getAuthor());
-			System.out.println(this.borrowedBooks.get(i).getYear());
+			System.out.println("ID\t: " + this.borrowedBooks.get(i).getID());
+			System.out.println("Title\t: " + this.borrowedBooks.get(i).getTitle());
+			System.out.println("Author\t: " + this.borrowedBooks.get(i).getAuthor());
+			System.out.println("Year\t: " + this.borrowedBooks.get(i).getYear());
+			System.out.println();
 		}
 		System.out.println("==========================================================");
+		System.out.println();
 	}
 
 	//saves the serialized User
@@ -122,10 +126,11 @@ public class User implements Serializable{								//mad it implement serializabl
 			e.printStackTrace();
 			System.out.println("Cannot read " + filename);
 		}
+		return null;
 	}
 
 	public static boolean isExist(String username){
-		File file = new File(username);
+		File file = new File(username + ".ser");
 		if(file.exists()) return true;
 		return false;
 

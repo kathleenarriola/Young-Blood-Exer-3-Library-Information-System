@@ -166,13 +166,17 @@ public class Library {
 			FileReader fr = new FileReader(file);
 			BufferedReader br = new BufferedReader(fr);
 
-			
+			System.out.println("===================== BOOKS ON SHELF =====================");
+			System.out.println();
 			while((ln = br.readLine()) != null){
 				info = ln.split(",", -1);
-				System.out.println("Title: " + info[0]);
-				System.out.println("Number of copies: " + this.books.get(info[0]).size());
+				System.out.println("Title\t: " + info[0]);
+				System.out.println("Author\t: " + info[1]);
+				System.out.println("Year\t: " + info[2]);
+				System.out.println("No. of copies\t: " + this.books.get(info[0]).size());
 				System.out.println();
 			}
+			System.out.println("=========================================================");
 
 
 			br.close();

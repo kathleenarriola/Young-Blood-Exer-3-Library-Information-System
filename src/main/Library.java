@@ -22,7 +22,8 @@ import java.io.File;
 public class Library {
 
 	private static final String SER_MAP_FILE = "libraryHash.ser";	//tentative, IDK that file path
-	private static final String BOOK_INFO_FILE = "books.csv";
+	//private static final String BOOK_INFO_FILE = "books.csv";
+	private static final String BOOK_INFO_FILE = "../../bin/books.csv";
 	HashMap<String,ArrayList<Book>> books;
 
 	public Library(){
@@ -142,7 +143,7 @@ public class Library {
 
 	public Book removeBook(String title){
 		if (this.books.containsKey(title)){					//if else statement to check if title exists and if there is still a copy
-			if(this.books.get(title).size() <= 1){
+			if(this.books.get(title).size() == 0){
 				System.out.println("No more copies of " + title);
 			} else return (books.get(title).remove(1));
 		}
@@ -154,8 +155,30 @@ public class Library {
 	}
 
 	public void viewAllBooks(){
-		for(String key : books.keySet()){
-			books.get(key).get(0);							//make this print all info about all books
-		}
+		Random rand = new Random();
+		String ln = null;
+		String[] info;
+		ArrayList<Book> list;
+		int noOfBooks;
+
+		try{
+			File file = new File(BOOK_INFO_FILE);
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+
+			
+			while((ln = br.readLine()) != null){
+				info = ln.split(",", -1);
+				System.out.println("Title: " + info[0]);
+				System.out.println("Number of copies: " + this.books.get(info[0]).size());
+				System.out.println();
+			}
+
+
+			br.close();
+		}catch(Exception e){
+			e.printStackTrace();
+			System.exit(0);
+		}	
 	}
 }

@@ -85,10 +85,10 @@ public class LibraryInformationSystem {
 			borrowBook(user);
 			break;
 		case 2:
-			//returnBook();
+			returnBook(user);
 			break;
 		case 3:
-			//viewAllBooks();
+			lib.viewAllBooks();
 			break;
 		case 4:
 			user.viewBorrowedBooks();

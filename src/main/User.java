@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.io.File;
 
 public class User implements Serializable{								//mad it implement serializable
-	private static final String SER_LIST_FILE = "borrowedBooks.ser";	//tentative, IDK that file path
+	//private static final String SER_LIST_FILE = "borrowedBooks.ser";	//tentative, IDK that file path
 
 	private String username;
 	private String password;
@@ -41,8 +41,9 @@ public class User implements Serializable{								//mad it implement serializabl
 
 	public void saveBooks(){
 		//serializing arrayList containing borrowed books
+		String filename = this.username + "Books.ser";
 		try{
-			File borrowedFile = new File(SER_LIST_FILE);
+			File borrowedFile = new File(filename);
 			FileOutputStream fos = new FileOutputStream(borrowedFile); 
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 
@@ -57,8 +58,9 @@ public class User implements Serializable{								//mad it implement serializabl
 	@SuppressWarnings("unchecked")
 	public void loadBooks(){
 		//deserializing and adding the borrowed books in the user's cart of borrowed books
+		String filename = this.username + "Books.ser";
 		try{
-			File borrowedFile = new File(SER_LIST_FILE);
+			File borrowedFile = new File(filename);
 			FileInputStream fis = new FileInputStream(borrowedFile);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 
@@ -70,8 +72,6 @@ public class User implements Serializable{								//mad it implement serializabl
 		}
 	}
 
-
-	
 	public void viewBorrowedBooks(){			//move this to User nalang
 
 
@@ -85,6 +85,51 @@ public class User implements Serializable{								//mad it implement serializabl
 		System.out.println("==========================================================");
 	}
 
+	//saves the serialized User
+	public void save(){
+		String filename = this.username + ".ser";
+		try{
+			File userFile = new File(filename);
+			FileOutputStream fos = new FileOutputStream(userFile);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+			oos.writeObject(this);
+			oos.close();
+		}catch(Exception e){
+			e.printStackTrace();
+			System.exit(0);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+
+	//deserializing object User
+	public static User load(String username){
+		String filename = username + ".ser";
+		User u = null;
+		try{
+			File userFile = new File(filename);
+			FileInputStream fis = new FileInputStream(userFile);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+
+			u = (User)ois.readObject();
+			ois.close();
+			return (u);
+		}catch(ClassNotFoundException c){
+			c.printStackTrace();
+			System.out.println("Class not found!");
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Cannot read " + filename);
+		}
+	}
+
+	public static boolean isExist(String username){
+		File file = new File(username);
+		if(file.exists()) return true;
+		return false;
+
+	}
 
 	//GETTERS
 	public ArrayList getList(){

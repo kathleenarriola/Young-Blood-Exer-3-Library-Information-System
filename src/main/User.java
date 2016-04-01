@@ -5,6 +5,9 @@
  */
 
 import java.util.ArrayList;
+
+import java.security.MessageDigest;
+
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.FileOutputStream;
@@ -16,12 +19,44 @@ public class User implements Serializable{								//mad it implement serializabl
 	//private static final String SER_LIST_FILE = "borrowedBooks.ser";	//tentative, IDK that file path
 
 	private String username;
-	private String password;
+	private byte[] password;
+	
+	
 	public ArrayList<Book> borrowedBooks;
 
-	public User(String username) {
+	public User(String username, String password) {
 		// TODO Auto-generated constructor stub
 		this.username = username;
+		this.password = encrypt(password);
+	}
+
+	public byte[] encrypt(String password){
+		byte[] passByte;
+		
+		try{
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			passByte = password.getBytes("UTF-8");
+			return md.digest(passByte);		
+		} catch(Exception e){
+			e.printStackTrace();
+			System.exit(0);
+		}
+
+		return null;
+	}
+
+	public boolean isPass(String password){
+		byte[] passByte;
+		try{
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			passByte = md.digest(password.getBytes("UTF-8"));
+			
+			return MessageDigest.isEqual(this.password, passByte);
+		}catch(Exception e){
+			e.printStackTrace();
+			System.exit(0);
+		}
+		return false;
 	}
 
 	public void borrowBooks(Book book){
@@ -122,6 +157,8 @@ public class User implements Serializable{								//mad it implement serializabl
 			e.printStackTrace();
 			System.out.println("Cannot read " + filename);
 		}
+
+		return null;
 	}
 
 	public static boolean isExist(String username){

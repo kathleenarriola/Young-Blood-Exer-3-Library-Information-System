@@ -13,17 +13,14 @@ import java.io.ObjectInputStream;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.BufferedReader;
-import java.io.Serializable;
-import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.File;
 
 
 public class Library {
 
-	private static final String SER_MAP_FILE = "libraryHash.ser";	//tentative, IDK that file path
-	//private static final String BOOK_INFO_FILE = "books.csv";
-	private static final String BOOK_INFO_FILE = "../../bin/books.csv";
+	private static final String SER_MAP_FILE = "../bin/libraryHash.ser";
+	private static final String BOOK_INFO_FILE = "../bin/books.csv";
 	HashMap<String,ArrayList<Book>> books;
 
 	public Library(){
@@ -31,16 +28,18 @@ public class Library {
 		this.loadBooks();
 	}
 
+	//loads the serialized hashmap of the library's books. Loads CSV file if not found.
 	private void loadBooks(){
 		if(Library.isFileExist(SER_MAP_FILE)) this.loadMAP();
 		else this.loadCSV();
 	}
-
+	
+	//load CSV file containing the books of the library
 	private void loadCSV(){
 		Random rand = new Random();
-		String ln = null;
-		String[] info;
-		ArrayList<Book> list;
+		String ln = null;				//contains the line read directly from the file
+		String[] info;					//contains the information of the book object
+		ArrayList<Book> list;			//contains the list of book objects
 		int noOfBooks;
 
 		try{
@@ -48,7 +47,6 @@ public class Library {
 			FileReader fr = new FileReader(file);
 			BufferedReader br = new BufferedReader(fr);
 
-			
 			while((ln = br.readLine()) != null){
 				info = ln.split(",", -1);
 				noOfBooks = rand.nextInt(6) + 16;
@@ -67,6 +65,7 @@ public class Library {
 		}
 	}
 
+	//loads hashmap. filename indicated is libraryHash.ser
 	@SuppressWarnings("unchecked")												//supresses warning on unsafe operations
 	private void loadMAP(){
 	
@@ -84,6 +83,7 @@ public class Library {
 		}
 	}
 
+	//save hashmap as libraryHash.ser
 	public void saveMAP(){
 	
 		try{
@@ -99,6 +99,7 @@ public class Library {
 		}
 	}
 	
+	//generates hexadecimal id of each book in the library
 	private String generateID(){
 		Random rand = new Random();
 		String id = null;
@@ -110,6 +111,7 @@ public class Library {
 		return id;
 	}
 	
+	//checks if ID is used by another book
 	private boolean isIDExist(String id){
 		ArrayList<Book> temp;
 	
@@ -122,6 +124,7 @@ public class Library {
 		return false;
 	}
 
+	//checks if file exists already
 	private static boolean isFileExist(String filename){
 		try{
 			File file = new File(filename);
@@ -130,9 +133,7 @@ public class Library {
 		}catch(Exception e){e.printStackTrace();}
 		return false;
 	}
-
-	//removed getBook() coz it has same function as removeBook
-
+	
 	public boolean hasTitle(String title){
 		if (this.books.containsKey(title)){
 			return true;
@@ -140,42 +141,42 @@ public class Library {
 		return false;
 	}
 
+	//method used in return book. removes a book in the individual array of each book
 	public Book removeBook(String title){
 		if (this.books.containsKey(title)){					//if else statement to check if title exists and if there is still a copy
 			if(this.books.get(title).size() == 0){
-				System.out.println("No more copies of " + title);
+				System.out.println("\tNo more copies of " + title);
 			} else return (books.get(title).remove(1));
 		}
 		return null;
 	}
 
+	
 	public void addBook(Book book){
 		this.books.get(book.getTitle()).add(book);			//added this for the returning of book
 	}
 
+	//displays all books in the library.
 	public void viewAllBooks(){
-		Random rand = new Random();
 		String ln = null;
 		String[] info;
-		ArrayList<Book> list;
-		int noOfBooks;
 
 		try{
 			File file = new File(BOOK_INFO_FILE);
 			FileReader fr = new FileReader(file);
 			BufferedReader br = new BufferedReader(fr);
 
-			System.out.println("===================== BOOKS ON SHELF =====================");
+			System.out.println("\n\t\t===================== BOOKS ON SHELF =====================");
 			System.out.println();
 			while((ln = br.readLine()) != null){
 				info = ln.split(",", -1);
-				System.out.println("Title\t: " + info[0]);
-				System.out.println("Author\t: " + info[1]);
-				System.out.println("Year\t: " + info[2]);
-				System.out.println("No. of copies\t: " + this.books.get(info[0]).size());
+				System.out.println("\t\t\tTitle\t: " + info[0]);
+				System.out.println("\t\t\tAuthor\t: " + info[1]);
+				System.out.println("\t\t\tYear\t: " + info[2]);
+				System.out.println("\t\t\tNo. of copies\t: " + this.books.get(info[0]).size());
 				System.out.println();
 			}
-			System.out.println("=========================================================");
+			System.out.println("\t\t=========================================================");
 
 
 			br.close();

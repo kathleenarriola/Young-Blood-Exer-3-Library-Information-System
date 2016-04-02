@@ -5,18 +5,17 @@
  */
 
 import java.util.ArrayList;
-
 import java.security.MessageDigest;
-
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.io.File;
 
-public class User implements Serializable{								//mad it implement serializable
-	//private static final String SER_LIST_FILE = "borrowedBooks.ser";	//tentative, IDK that file path
+@SuppressWarnings("serial")
+public class User implements Serializable{
 
 	private String username;
 	private byte[] password;
@@ -25,13 +24,13 @@ public class User implements Serializable{								//mad it implement serializabl
 	public ArrayList<Book> borrowedBooks;
 
 	public User(String username, String password) {
-		// TODO Auto-generated constructor stub
 		this.username = username;
 		this.password = encrypt(password);
 		this.borrowedBooks = new ArrayList<Book>();
 	
 	}
-
+	
+	//encrypts the inputted password by the User
 	public byte[] encrypt(String password){
 		byte[] passByte;
 		
@@ -47,11 +46,14 @@ public class User implements Serializable{								//mad it implement serializabl
 		return null;
 	}
 
-	public boolean isPass(String password){
+	//checks if inputted password is equal to the encrypted password on file
+	public boolean isPass(char[] password){
 		byte[] passByte;
+		String passwordString;
 		try{
 			MessageDigest md = MessageDigest.getInstance("MD5");
-			passByte = md.digest(password.getBytes("UTF-8"));
+			passwordString = String.valueOf(password);
+			passByte = md.digest(passwordString.getBytes(StandardCharsets.UTF_8));
 			
 			return MessageDigest.isEqual(this.password, passByte);
 		}catch(Exception e){
@@ -60,25 +62,24 @@ public class User implements Serializable{								//mad it implement serializabl
 		}
 		return false;
 	}
-
+	
+	//adds the borrowed book to the user's borrowed books cart
 	public void borrowBooks(Book book){
-		//adds the borrowed book to the user's borrowed books cart
+		
 		this.borrowedBooks.add(book);
 	}
 
+	//removes the book from the user's borrowed books cart
 	public Book returnBooks(String title){
-		//removed the book from the user's borrowed books cart
 		for(int i = 0; i < this.borrowedBooks.size(); i++){
 			if(borrowedBooks.get(i).getTitle().equals(title)) return this.borrowedBooks.remove(i);
 		}
 		return null;
 	}
 	
-	//add save and load of User class
-
+	//serializing arrayList containing borrowed books
 	public void saveBooks(){
-		//serializing arrayList containing borrowed books
-		String filename = this.username + "Books.ser";
+		String filename = "../bin/" + this.username + "Books.ser";
 		try{
 			File borrowedFile = new File(filename);
 			FileOutputStream fos = new FileOutputStream(borrowedFile); 
@@ -93,9 +94,9 @@ public class User implements Serializable{								//mad it implement serializabl
 	}
 
 	@SuppressWarnings("unchecked")
+	//deserializing and adding the borrowed books in the user's cart of borrowed books
 	public void loadBooks(){
-		//deserializing and adding the borrowed books in the user's cart of borrowed books
-		String filename = this.username + "Books.ser";
+		String filename = "../bin/" + this.username + "Books.ser";
 		try{
 			File borrowedFile = new File(filename);
 			FileInputStream fis = new FileInputStream(borrowedFile);
@@ -109,25 +110,24 @@ public class User implements Serializable{								//mad it implement serializabl
 		}
 	}
 
-	public void viewBorrowedBooks(){			//move this to User nalang
-
-
-		System.out.println("===================== BORROWED BOOKS =====================");
+	//views all the borrowed books of user
+	public void viewBorrowedBooks(){
+		System.out.println("\n\t\t===================== BORROWED BOOKS =====================");
 		System.out.println();
 		for (int i = 0; i < this.borrowedBooks.size(); i++){
-			System.out.println("ID\t: " + this.borrowedBooks.get(i).getID());
-			System.out.println("Title\t: " + this.borrowedBooks.get(i).getTitle());
-			System.out.println("Author\t: " + this.borrowedBooks.get(i).getAuthor());
-			System.out.println("Year\t: " + this.borrowedBooks.get(i).getYear());
+			System.out.println("\t\t\tID\t: " + this.borrowedBooks.get(i).getID());
+			System.out.println("\t\t\tTitle\t: " + this.borrowedBooks.get(i).getTitle());
+			System.out.println("\t\t\tAuthor\t: " + this.borrowedBooks.get(i).getAuthor());
+			System.out.println("\t\t\tYear\t: " + this.borrowedBooks.get(i).getYear());
 			System.out.println();
 		}
-		System.out.println("==========================================================");
+		System.out.println("\n\t\t==========================================================");
 		System.out.println();
 	}
 
 	//saves the serialized User
 	public void save(){
-		String filename = this.username + ".ser";
+		String filename = "../bin/" + this.username + ".ser";
 		try{
 			File userFile = new File(filename);
 			FileOutputStream fos = new FileOutputStream(userFile);
@@ -141,11 +141,9 @@ public class User implements Serializable{								//mad it implement serializabl
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-
 	//deserializing object User
 	public static User load(String username){
-		String filename = username + ".ser";
+		String filename = "../bin/" + username + ".ser";
 		User u = null;
 		try{
 			File userFile = new File(filename);
@@ -157,23 +155,24 @@ public class User implements Serializable{								//mad it implement serializabl
 			return (u);
 		}catch(ClassNotFoundException c){
 			c.printStackTrace();
-			System.out.println("Class not found!");
+			System.out.println("\tClass not found!");
 		}catch(Exception e){
 			e.printStackTrace();
-			System.out.println("Cannot read " + filename);
+			System.out.println("\tCannot read " + filename);
 		}
 		return null;
 	}
 
+	//checks if serialized User file exists
 	public static boolean isExist(String username){
-		File file = new File(username + ".ser");
+		File file = new File("../bin/" + username + ".ser");
 		if(file.exists()) return true;
 		return false;
 
 	}
 
 	//GETTERS
-	public ArrayList getList(){
+	public ArrayList<Book> getList(){
 		return this.borrowedBooks;
 	}
 

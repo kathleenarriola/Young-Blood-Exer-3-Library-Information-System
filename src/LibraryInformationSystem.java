@@ -86,7 +86,7 @@ public class LibraryInformationSystem {
 			}
 		
 		}while(choice < 0 || choice > 2);
-
+		input.nextLine();
 		switch(choice){
 			case 0: System.exit(0);
 			case 1: return login();
@@ -106,7 +106,6 @@ public class LibraryInformationSystem {
 			if(isValid)System.out.print("\n\tEnter username: ");
 			else System.out.print("\tEnter existing username: ");
 
-			input.nextLine();
 			username = input.nextLine();
 			isValid = false;
 		}while(!User.isExist(username));						//loop for checking if username exists in bin
@@ -134,8 +133,6 @@ public class LibraryInformationSystem {
 		do{
 			if(isValid)System.out.print("\n\tEnter username: ");
 			else System.out.print("\tEnter non-existing username: ");			//if username entered does not exist in serialized files
-
-			input.nextLine();
 			username = input.nextLine();
 			isValid = false;
 		}while(User.isExist(username));

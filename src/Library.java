@@ -19,8 +19,8 @@ import java.io.File;
 
 public class Library {
 
-	private static final String SER_MAP_FILE = "../bin/libraryHash.ser";
-	private static final String BOOK_INFO_FILE = "../bin/books.csv";
+	private static final String SER_MAP_FILE = "bin/libraryHash.ser";
+	private static final String BOOK_INFO_FILE = "bin/books.csv";
 	HashMap<String,ArrayList<Book>> books;
 
 	public Library(){

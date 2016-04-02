@@ -12,6 +12,43 @@ public class LibraryInformationSystem {
 	private static Scanner input = new Scanner(System.in);
 	private static Library lib = new Library();
 
+	public static void main(String[] args) {
+		int menuChoice;
+		User user = null;
+		Scanner input = new Scanner(System.in);
+
+		System.out.println("\n\n\t\t\t\tWelcome to the library!\n");
+		
+		user = loginMenu();
+		do{
+			menuChoice = menu();
+			System.out.println();
+			switch(menuChoice){
+			case 0: break; //exit
+			case 1:
+				borrowBook(user);
+				break;
+			case 2:
+				returnBook(user);
+				break;
+			case 3:
+				lib.viewAllBooks();
+				break;
+			case 4:
+				user.viewBorrowedBooks();
+				break;
+			default: System.out.println("\tInvalid input.");
+				break;
+			}
+		} while(menuChoice != 0);
+		
+		user.saveBooks();				//serializes the book cart of the user. filename: (username)Books.ser
+		user.save();					//serializes the user. filename: (username).ser
+		lib.saveMAP();					//serializes the hashmap
+		input.close();					//closes the input buffer
+		System.out.println("\n\t\t\t\tThank you for using the Library!");
+	}
+
 	public static int menu(){
 		int menuChoice = 0;
 		
@@ -153,43 +190,6 @@ public class LibraryInformationSystem {
 		}while(true);
 
 		return new User(username, password);
-	}
-
-	public static void main(String[] args) {
-		int menuChoice;
-		User user = null;
-		Scanner input = new Scanner(System.in);
-
-		System.out.println("\n\n\t\t\t\tWelcome to the library!\n");
-		
-		user = loginMenu();
-		do{
-			menuChoice = menu();
-			System.out.println();
-			switch(menuChoice){
-			case 0: break; //exit
-			case 1:
-				borrowBook(user);
-				break;
-			case 2:
-				returnBook(user);
-				break;
-			case 3:
-				lib.viewAllBooks();
-				break;
-			case 4:
-				user.viewBorrowedBooks();
-				break;
-			default: System.out.println("\tInvalid input.");
-				break;
-			}
-		} while(menuChoice != 0);
-		
-		user.saveBooks();				//serializes the book cart of the user. filename: (username)Books.ser
-		user.save();					//serializes the user. filename: (username).ser
-		lib.saveMAP();					//serializes the hashmap
-		input.close();					//closes the input buffer
-		System.out.println("\n\t\t\t\tThank you for using the Library!");
 	}
 
 }

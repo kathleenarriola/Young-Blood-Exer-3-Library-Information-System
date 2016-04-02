@@ -79,7 +79,7 @@ public class User implements Serializable{
 	
 	//serializing arrayList containing borrowed books
 	public void saveBooks(){
-		String filename = "../bin/" + this.username + "Books.ser";
+		String filename = "bin/" + this.username + "Books.ser";
 		try{
 			File borrowedFile = new File(filename);
 			FileOutputStream fos = new FileOutputStream(borrowedFile); 
@@ -96,7 +96,7 @@ public class User implements Serializable{
 	@SuppressWarnings("unchecked")
 	//deserializing and adding the borrowed books in the user's cart of borrowed books
 	public void loadBooks(){
-		String filename = "../bin/" + this.username + "Books.ser";
+		String filename = "bin/" + this.username + "Books.ser";
 		try{
 			File borrowedFile = new File(filename);
 			FileInputStream fis = new FileInputStream(borrowedFile);
@@ -127,7 +127,7 @@ public class User implements Serializable{
 
 	//saves the serialized User
 	public void save(){
-		String filename = "../bin/" + this.username + ".ser";
+		String filename = "bin/" + this.username + ".ser";
 		try{
 			File userFile = new File(filename);
 			FileOutputStream fos = new FileOutputStream(userFile);
@@ -143,7 +143,7 @@ public class User implements Serializable{
 
 	//deserializing object User
 	public static User load(String username){
-		String filename = "../bin/" + username + ".ser";
+		String filename = "bin/" + username + ".ser";
 		User u = null;
 		try{
 			File userFile = new File(filename);
@@ -165,7 +165,7 @@ public class User implements Serializable{
 
 	//checks if serialized User file exists
 	public static boolean isExist(String username){
-		File file = new File("../bin/" + username + ".ser");
+		File file = new File("bin/" + username + ".ser");
 		if(file.exists()) return true;
 		return false;
 
